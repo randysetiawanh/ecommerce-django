@@ -1,0 +1,98 @@
+{% load static %}
+<nav class="navbar navbar-default navbar-fixed-top nav-transparent overlay-nav sticky-nav nav-border-bottom" role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 pull-left">
+                <a class="logo-light" href="{% url 'store:index' %}"> <img alt="" src="{% static 'img/logo-header.png' %}" class="logo" /></a></div>
+            <div class="col-md-2 no-padding-left search-cart-header pull-right" id="navbar-cart">
+                <div class="top-cart">
+                    <a href="{% url 'store:cart' %}" class="shopping-cart">
+                        <i class="fa fa-shopping-cart"></i>
+                        <div class="subtitle">{{CartItems}} Items</div>
+                    </a>
+                    <div class="cart-content" id="cart-content-navbar">
+                        <ul class="cart-list"> 
+                            {% for item in Items %}
+                            <li>
+                                <a href="#">
+                                    <img width="90" height="90" alt="{{item.productOrdered.nameProduct}}" src="{{item.productOrdered.imageURL}}">{{item.productOrdered.nameProduct}}
+                                </a>
+                                <span class="quantity">{{item.quantityOrdered}} × <span class="amount">Rp{{item.productOrdered.priceProduct|floatformat:2}}</span></span>
+                                <a href="{% url 'store:cart' %}">Edit</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <p class="total">Subtotal: <span class="amount">Rp{{Order.getCartTotal|floatformat:2}}</span></p>
+                        <p class="buttons">
+                            <a href="{% url 'store:cart' %}" class="btn btn-very-small-white no-margin-bottom margin-seven pull-left no-margin-lr">View Cart</a>
+                            <a href="{% url 'store:checkout' %}" class="btn btn-very-small-white no-margin-bottom margin-seven no-margin-right pull-right">Checkout</a>
+                        </p>
+                    </div>
+                    <div class="cart-content hidden" id="cart-content-navbar-zero">
+                        <p class="total text-center">Your Cart is Empty!</p>
+                        <p class="buttons">
+                            <a href="{% url 'store:products' %}" class="btn btn-very-small-white no-margin-bottom margin-seven no-margin-right pull-center">Continue Shopping</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-header col-sm-8 col-xs-2 pull-right">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            </div>
+            <div class="col-md-8 no-padding-right accordion-menu text-right">
+                <div class="navbar-collapse collapse">
+                    <ul id="accordion" class="nav navbar-nav navbar-right panel-group">
+                        <li><a href="{% url 'store:index' %}">Home</a></li>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#collapse1" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">Shop<i class="fa fa-angle-down"></i></a>
+                            <ul id="collapse1" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li class="mega-menu-column col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">For Shopping</li>
+                                        <li><a href="{% url 'store:store' %}">Shop homepage</a></li>
+                                        <li><a href="{% url 'store:products' %}">Collection</a></li>
+                                        <li><a href="{% url 'store:cart' %}">Cart</a></li>
+                                        <li><a href="{% url 'store:checkout' %}">Checkout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#collapse2" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">About<i class="fa fa-angle-down"></i></a>
+                            <ul id="collapse2" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li class="mega-menu-column col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">For About</li>
+                                        <li><a href="{% url 'store:about_us' %}">About Us</a></li>
+                                        <li><a href="{% url 'store:testimonials' %}">Testimonials</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'store:contact_us' %}">Contact Us</a></li>
+                        <li class="dropdown panel simple-dropdown">
+                            <a href="#collapse3" class="dropdown-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-hover="dropdown">My Account<i class="fa fa-angle-down"></i></a>
+                            <ul id="collapse3" class="dropdown-menu panel-collapse collapse" role="menu">
+                                <li class="mega-menu-column col-sm-3">
+                                    <ul>
+                                        {% if user.is_authenticated %}
+                                        <li class="dropdown-header">For {{user.username}}</li>
+                                        <li><a href="{% url 'store:profile' %}">My Profile</a></li>
+                                        <li><a href="{% url 'store:check_order' %}">Orders</a></li>
+                                        <li><a href="{% url 'store:change_password' %}">Change Passowrd</a></li>
+                                        <li><a href="{% url 'store:logout' %}">Logout</a></li>
+                                        {% else %}
+                                        <li class="dropdown-header">For Users</li>
+                                        <li><a href="{% url 'store:login' %}">Login</a></li>
+                                        <li><a href="{% url 'store:register' %}">Register</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

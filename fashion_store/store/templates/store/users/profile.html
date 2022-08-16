@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<!-- head section -->
+<section class="content-top-margin page-title page-title-small border-bottom-light border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">Profile</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-md-4 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>Users</li>
+                    <li>Profile</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'snippets/messages.html' %}
+<!-- end head section -->
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section class="wow fadeIn no-padding bg-black">
+    <div class="container">
+        <div class="row margin-ten">
+            <div class="col-md-12 col-sm-10 text-center center-col white-text wow fadeIn">
+                {% if user.is_authenticated %}
+                <img src="{% static 'img/profiles/default-profile.png' %}" height="200px" width="200px"><br><br>
+                <h1 class="white-text">{{user.first_name}} {{user.last_name}}</h1>
+                <h6 class="white-text">{{user.email}}</h6>
+                <h6 class="white-text"><span>Joined in</span> {{user.date_joined|date:"F d, Y"}}</h6>
+                {% else %}
+                <p class="not-found-title white-text">Your not Logged In!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a href="#" class="btn-small-white btn btn-small btn-round button xs-margin-bottom-five">Login to Your Account</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}

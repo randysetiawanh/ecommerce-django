@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title-small border-bottom-light border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">About Us</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-md-4 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>About Us</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="wow fadeIn cover-background" style="background-image:url('{% static 'img/about/logo-with-text-1920x823.jpg' %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-8">
+                <div class="separator-line bg-yellow no-margin-lr no-margin-top"></div>
+                <div class="white-text slider-subtitle1 bg-inherit no-margin text-left no-padding">Design. Create. Innovate.</div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section class="border-bottom-light sm-text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7"><img src="{% static 'img/about/about-us-img-12.png' %}" alt=""/></div>
+            <div class="col-md-5">
+                <h1 class="title-extra-large font-weight-700 black-text margin-five text-transform-none">What we do</h1>
+                <p class="title-small font-weight-300">Making all people to give a good and good impression on the style used and provide comfort when doing worship, especially for Muslims in Indonesia.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="restaurant-our-service bg-gray" id="our-service">
+    <div class="container">  
+        <div class="row margin-ten-bottom xs-no-margin-bottom">
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon05.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Branding</p>
+                <p class="text-med margin-two width-90 center-col">Making the best local brand in the Muslim clothing category.</p> 
+            </div>
+            <!-- end service item -->
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon04.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Competitive</p>
+                <p class="text-med margin-two width-90 center-col">Can compete with any local brand in Indonesia.</p> 
+            </div>
+            <!-- end service item -->
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon06.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Affordable</p>
+                <p class="text-med margin-two width-90 center-col">Making very affordable prices for all circles. This makes buying easier.</p> 
+            </div>
+            <!-- end service item --> 
+        </div>
+        <div class="row">
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon07.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Interesting</p>
+                <p class="text-med margin-two width-90 center-col">Gives a good and cool impression to Muslims.</p> 
+            </div>
+            <!-- end service item -->
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon09.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Stylish</p>
+                <p class="text-med margin-two width-90 center-col">Always able to adapt to changing styles of the latest times, so it looks very memorable and not old-fashioned.</p> 
+            </div>
+            <!-- end service item -->
+            <!-- service item -->
+            <div class="col-md-4 col-sm-4 col-xs-12 text-center xs-margin-bottom-ten">
+                <img alt="" src="{% static 'img/about/about-us-icon08.png' %}">
+                <p class="text-extra-large text-uppercase black-text font-weight-600 margin-ten margin-four-bottom xs-margin-top-four">Best Local</p>
+                <p class="text-med margin-two width-90 center-col">Promote and promote local Indonesian brands so that they can compete internationally.</p> 
+            </div>
+            <!-- end service item --> 
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}
+    

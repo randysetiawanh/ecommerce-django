@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title page-title-small border-bottom-light border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-7 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <ul>
+                    <li><a href="{% url 'store:store' %}">Shop</a></li>
+                    <li><a href="#">Product</a></li>
+                    <li>{{Products.nameProduct|truncatechars:45}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 zoom-gallery sm-margin-bottom-ten">
+                <a href="{{Products.imageURL}}"><img src="{{Products.imageURL}}" alt=""/></a>
+            </div>
+            <div class="col-md-5 col-sm-12 col-md-offset-1">
+                <div class="rating margin-five no-margin-top">
+                    <i class="fa fa-star black-text"></i><i class="fa fa-star black-text"></i><i class="fa fa-star black-text"></i><i class="fa fa-star black-text"></i><i class="fa fa-star black-text"></i>
+                </div>
+                <span class="product-name-details text-uppercase font-weight-600 letter-spacing-2 black-text">{{Products.nameProduct|truncatechars:45}}</span>
+                <br><br><a class="text-uppercase letter-spacing-2 margin-two" href="/products/categories/{{Products.categoryProduct}}">{{Products.categoryProduct}}</a>
+                <p class="text-uppercase letter-spacing-2 margin-two">In Stock / Shipping Available</p>
+                <div class="separator-line bg-black no-margin-lr margin-five"></div>
+                <p>{{Products.descriptionProduct|linebreaksbr|truncatechars:200}}</p>
+                <span class="price black-text title-small"><del>Rp{{Products.discPrice|floatformat:2}}</del>Rp{{Products.priceProduct|floatformat:2}}</span>
+                <div class="col-md-9 col-sm-9 no-padding margin-five">
+                    <button data-product="{{Products.id}}" data-action="add" class="highlight-button-dark btn btn-medium button update-cart"><i class="icon-basket"></i> Add To Cart</button>
+                </div>
+                <div class="col-md-8 col-sm-9 product-details-social no-padding">
+                    <span class="black-text text-uppercase text-small vertical-align-middle margin-right-five">Share on</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//127.0.0.1%3A8000/products/detail/{{Products.id}}/"><i class="fa fa-facebook"></i></a>
+                    <a href="https://twitter.com/intent/tweet?text=Kuffa%20Product%21%20Check%20it%20out%21%20http%3A//127.0.0.1%3A8000//products/detail/{{Products.id}}/"><i class="fa fa-twitter"></i></a>
+                    <a href="https://api.whatsapp.com/send?text=http%3A//127.0.0.1%3A8000/products/detail/{{Products.id}}/"><i class="fa fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}

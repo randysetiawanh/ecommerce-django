@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>{{Type}}</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    {% include 'snippets/styles.html' %}
+    {% include 'snippets/styleslogic.html' %}
+</head>
+<body>
+    {% include 'snippets/navbar.html' %}
+    
+    {% block mainBanner %}
+    {% endblock mainBanner %}
+
+    {% block mainContent %}
+    {% endblock mainContent %}
+
+    {% include 'snippets/footer.html' %}
+
+    {% include 'snippets/scripts.html' %}
+    {% include 'snippets/scriptslogic.html' %}
+</body>
+</html>

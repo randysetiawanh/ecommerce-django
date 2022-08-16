@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<!-- head section -->
+<section class="content-top-margin page-title page-title-small border-bottom-light border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">Register</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-md-4 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>Users</li>
+                    <li>Register</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end head section -->
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<!-- content section -->
+<section class="bg-gray wow fadeIn border-top">
+    <div class="container">
+        <div class="row hidden" id="login-zero">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Your Already Login!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+        </div>
+        <div class="row">
+            {% if form.errors  %}
+            <div class="col-md-7 col-sm-8 center-col text-center pull-center">
+                <!-- alert message -->
+                <div class="alert alert-block alert-danger fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h3 class="alert-danger margin-one no-margin-top">Oh snap!</h3>
+                    <p>{{ form.non_field_errors }}{{ form.first_name.errors }}{{ form.last_name.errors }}{{ form.username.errors }}{{ form.email.errors }}{{ form.password1.errors }}{{ form.password2.errors }}</p>
+                </div>
+                <!-- end alert message -->
+            </div>
+            {% endif %}
+            <div class="col-md-10 col-sm-8 col-xs-11 center-col pull-center xs-no-padding" id="login">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group no-margin-bottom row margin-five">
+                        <div class="col-md-6">
+                            <label for="{{ form.first_name.id_for_label }}" class="text-uppercase">{{ form.first_name.label }}</label>
+                            <p class="text-med no-margin">
+                                {{ form.first_name }}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.last_name.id_for_label }}" class="text-uppercase">{{ form.last_name.label }}</label>
+                            <p class="text-med no-margin">
+                                {{ form.last_name }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group no-margin-bottom">
+                        <label for="{{ form.username.id_for_label }}" class="text-uppercase">{{ form.username.label }}</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group no-margin-bottom">
+                        <label for="{{ form.email.id_for_label }}" class="text-uppercase">{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group no-margin-bottom">
+                        <label for="{{ form.password1.id_for_label }}" class="text-uppercase">{{ form.password1.label }}</label>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="form-group no-margin-bottom">
+                        <label for="{{ form.password2.id_for_label }}" class="text-uppercase">{{ form.password2.label }}</label>
+                        {{ form.password2 }}
+                    </div>
+                    <center><button class="btn highlight-button-dark btn-medium btn-round margin-two no-margin-right" type="submit">Register</button></center>
+                    <!-- <a href="#" class="display-block text-uppercase">Forgot Password?</a> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end content section -->
+<script type="text/javascript">
+    if (user != 'AnonymousUser'){
+        document.getElementById('login').classList.add("hidden");
+        document.getElementById('navbar-cart').classList.add("hidden");
+        document.getElementById('login-zero').classList.remove("hidden");
+    }
+    if (user == 'AnonymousUser'){
+        document.getElementById('navbar-cart').classList.add("hidden");
+    }
+    if (messages == messages){
+
+    }
+</script>
+{% endblock mainContent %}

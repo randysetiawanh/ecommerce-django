@@ -1,0 +1,138 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title page-title-small bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">Shopping Cart</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>Shopping Cart</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section id="cart-zero" class="content-top-margin no-padding-bottom border-top wow fadeIn hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Your Cart is Empty!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 center-col">
+                <img src="{% static 'img/templates/404.jpg' %}" alt=""/>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- content section -->
+<section id="cart-info" class="content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 shop-cart-table">
+                <table class="table shop-cart text-center">
+                    <thead>
+                        <tr>
+                            <th class="first"></th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Product</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Price</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Quantity</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for items in Items %}
+                        <tr>
+                            <td class="product-thumbnail text-left">
+                                <a href="#"><img height="120px" width="120px" src="{{items.productOrdered.imageURL}}" alt="{{items.productOrdered.nameProduct}}" ></a>
+                            </td>
+                            <td class="text-left">
+                                <a href="#">{{items.productOrdered.nameProduct}}</a>
+                            </td>
+                            <td class="text-left">
+                                Rp{{items.productOrdered.priceProduct|floatformat:2}}
+                            </td>
+                            <td class="product-quantity text-left">
+                                <button type="button">
+                                    <img class="chg-quantity update-cart" data-product="{{items.productOrdered.id}}" data-action="remove" width="18px" height="18px" src="{% static  'img/templates/minus.png' %}" alt="">
+                                </button>
+                                <label>x{{items.quantityOrdered}}</label>
+                                <button type="button">
+                                    <img class="chg-quantity update-cart" data-product="{{items.productOrdered.id}}" data-action="add" width="18px" height="18px" src="{% static  'img/templates/plus.png' %}" alt="">
+                                </button>
+                            </td>
+                            <td class="product-subtotal text-left">Rp{{items.getOrderTotal|floatformat:2}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12 cupon padding-five border-top border-bottom">
+                <a class="highlight-button btn btn-very-small no-margin pull-right continue-shopping" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+            <div class="col-sm-12 padding-five no-padding-bottom">
+                <div class="col-md-5 col-sm-5 calculate no-padding-left xs-margin-bottom-ten xs-no-padding">
+                </div>
+                <div class="col-md-6 col-sm-7 col-md-offset-1 no-padding-right xs-no-padding">
+                    <table class="table cart-total">
+                        <tbody>
+                            <tr>
+                                <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Total Items</th>
+                                <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text xs-no-padding">{{Order.getCartItems}}</td>
+                            </tr>
+                            <tr>
+                                <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Cart Subtotals</th>
+                                <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text xs-no-padding">Rp{{Order.getCartTotal|floatformat:2}}</td>
+                            </tr>
+                            <tr>
+                                <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Shipping and Handling</th>
+                                <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text text-small xs-no-padding">Free</td>
+                            </tr>
+                            <tr>
+                                <td class="padding-one no-padding-right xs-no-padding" colspan="2">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <tr class="total">
+                                <th class="padding-two text-uppercase text-right no-padding-right font-weight-600 text-large xs-no-padding">Order Total</th>
+                                <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text text-large no-letter-spacing xs-no-padding">Rp{{Order.getCartTotal|floatformat:2}}</td>
+                            </tr>
+                            <tr>
+                                <td class="padding-one no-padding-right xs-no-padding" colspan="2">
+                                    <hr class="no-margin-bottom">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="highlight-button-black-background btn no-margin pull-right checkout-btn" href="{% url 'store:checkout' %}">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end content section -->
+<script type="text/javascript">
+    var getTotalItems = '{{Order.getCartItems}}'
+
+    if(getTotalItems == '0'){
+        document.getElementById('cart-info').classList.add("hidden");
+        document.getElementById('cart-zero').classList.remove("hidden");
+    }
+</script>
+{% endblock mainContent %}

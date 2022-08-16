@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>{{Type}}</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    {% include 'snippets/styles.html' %}
+    {% include 'snippets/styleslogic.html' %}
+</head>
+<body>
+    <section class="wow fadeIn bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-10 center-col text-center margin-ten no-margin-top xs-margin-bottom-seven">
+                    <h6 class="no-margin-top margin-ten xs-margin-bottom-seven"><strong class="black-text">Add Product With Newsletter</strong></h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 col-sm-10 center-col">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="text-uppercase">{{form.nameProduct.label}}</label>
+                            {{form.nameProduct}}
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">{{form.priceProduct.label}}</label>
+                            {{form.priceProduct}}
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">{{form.imageProduct.label}}</label>
+                            {{form.imageProduct}}
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">{{form.categoryProduct.label}}</label>
+                            {{form.categoryProduct}}
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">{{form.nameProduct.label}}</label>
+                            {{form.descriptionProduct}}
+                        </div>
+                        <div class="form-group">
+                            <button id="addproduct-button" type="submit" class="highlight-button-dark btn btn-small button xs-margin-bottom-five">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% include 'snippets/scripts.html' %}
+    {% include 'snippets/scriptslogic.html' %}
+</body>
+</html>

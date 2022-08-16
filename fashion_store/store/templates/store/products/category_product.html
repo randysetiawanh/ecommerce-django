@@ -1,0 +1,101 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title page-title-small border-bottom-light border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-7 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <ul>
+                    <li><a href="{% url 'store:store' %}">Shop</a></li>
+                    <li><a href="{% url 'store:products' %}">Product</a></li>
+                    <li>{{CategoryProduct}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section id="category-detail-zero" class="content-top-margin no-padding-bottom border-top wow fadeIn hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Category Product is Empty!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 center-col">
+                <img src="{% static 'img/templates/404.jpg' %}" alt=""/>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="category-detail" class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 sidebar">
+                <div class="widget">
+                    <h5 class="widget-title font-alt">Categories</h5>
+                    <div class="thin-separator-line bg-dark-gray no-margin-lr margin-ten"></div>
+                    <div class="widget-body">
+                        <ul class="category-list">
+                            {% for category in Category %}
+                            <li><a href="/products/categories/{{category.nameCategory}}">{{category.nameCategory}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h5 class="widget-title font-alt">Categories</h5>
+                    <div class="thin-separator-line bg-dark-gray no-margin-lr margin-ten"></div>
+                    <div class="widget-body">
+                        <div class="select-style input-round med-input shop-shorting no-border">
+                            <select onchange="location = this.value;">
+                                <option>Select category</option>
+                                {% for category in Category %}
+                                <option value="/products/categories/{{category.nameCategory}}">{{category.nameCategory}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-8 col-md-offset-1">
+                <div class="shorting clearfix xs-margin-top-three">
+                    <div class="col-md-8 col-sm-7 grid-nav">
+                        <p class="text-uppercase letter-spacing-1 sm-display-none">Showing {{TotalCategory}} results in {{CategoryProduct}} Categories.</p>
+                    </div>
+                </div>
+                <div class="product-listing margin-three">
+                    {% for product in Products %}                        
+                    <div class="col-md-6 col-sm-6">
+                        <div class="home-product text-center position-relative overflow-hidden margin-ten no-margin-top">
+                            <a href="/products/detail/{{product.id}}/"><img src="{{product.imageURL}}" alt="{{product.nameProduct}}"/></a>
+                            <span class="product-name text-uppercase"><a href="/products/detail/{{product.id}}">{{product.nameProduct|truncatechars:45}}</a></span>
+                            <span class="price black-text"><del>{{product.discPrice|floatformat:2}}</del>Rp{{product.priceProduct|floatformat:2}}</span>
+                            <div class="quick-buy">
+                                <div class="product-share">
+                                    <button data-product="{{Products.id}}" data-action="add" class="highlight-button-dark btn btn-small no-margin-right quick-buy-btn update-cart" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var getTotalCategory = '{{TotalCategory}}'
+
+    if(getTotalCategory == '0'){
+        document.getElementById('category-detail').classList.add("hidden");
+        document.getElementById('category-detail-zero').classList.remove("hidden");
+    }
+</script>
+{% endblock mainContent %}

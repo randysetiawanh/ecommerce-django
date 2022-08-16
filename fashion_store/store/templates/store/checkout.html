@@ -1,0 +1,271 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<!-- head section -->
+<section class="content-top-margin page-title page-title-small bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">Checkout</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li><a href="{% url 'store:cart' %}">Shopping Cart</a></li>
+                    <li>Checkout</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end head section -->
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader hidden">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+<section id="cart-zero" class="content-top-margin no-padding-bottom border-top wow fadeIn hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Your Cart is Empty!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-sm-8 col-xs-11 center-col">
+                <img src="{% static 'img/templates/404.jpg' %}" alt=""/>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="checkout-info">
+    <div class="container clearfix">
+        <form id="form">
+            <div id="user-info" class="row margin-five no-margin-top">
+                <div class="col-md-12 col-sm-12 pull-center center-col sm-margin-bottom-seven">
+                    <p class="black-text font-weight-600 text-uppercase text-large">User Information</p>
+                        {% if user.is_authenticated %}
+                        <div class="col-md-12 no-padding-right no-padding-left sm-no-padding">
+                            <label>* Email Address:</label>
+                            <input id="email" required class="form-control" placeholder="name@email.com"  type="email" name="email" value="{{user.email}}">
+                        </div>
+                        <div class="col-md-6 no-padding-left sm-no-padding">
+                            <label>* First Name:</label>
+                            <input id="firstname" required class="form-control" type="text" name="firstname" placeholder="Input First Name" value="{{user.first_name}}">
+                        </div>
+                        <div class="col-md-6 no-padding-right sm-no-padding">
+                            <label>* Last Name:</label>
+                            <input id="lastname" required class="form-control" type="text" name="lastname" placeholder="Input Last Name" value="{{user.last_name}}">
+                        </div>
+                        {% else %}
+                        <div class="col-md-12 no-padding-right no-padding-left sm-no-padding">
+                            <label>* Email Address:</label>
+                            <input id="email" required class="form-control" placeholder="name@email.com"  type="email" name="email" value="">
+                        </div>
+                        <div class="col-md-6 no-padding-left sm-no-padding">
+                            <label>* First Name:</label>
+                            <input id="firstname" required class="form-control" type="text" name="firstname" placeholder="Input First Name" value="">
+                        </div>
+                        <div class="col-md-6 no-padding-right sm-no-padding">
+                            <label>* Last Name:</label>
+                            <input id="lastname" required class="form-control" type="text" name="lastname" placeholder="Input Last Name" value="">
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+            <div id="shipping-info" class="row margin-five no-margin-top">
+                <div class="col-md-12 col-sm-12 pull-center center-col sm-margin-bottom-seven">
+                    <p class="black-text font-weight-600 text-uppercase text-large">Shipping Address</p>
+                        <div class="col-md-12 no-padding-right no-padding-left sm-no-padding">
+                            <label>* Address:</label>
+                            <input required class="form-control" type="text" placeholder="Jl. Menteng No. 1" name="address">
+                        </div>
+                        <div class="col-md-6 no-padding-left sm-no-padding">
+                            <label>* City / Town:</label>
+                            <input required class="form-control" type="text" placeholder="Jakarta" name="city">
+                        </div>
+                        <div class="col-md-6 no-padding-right sm-no-padding">
+                            <label>* State:</label>
+                            <input required class="form-control" type="text" placeholder="DKI Jakarta" name="state">
+                        </div>
+                        <div class="col-md-6 no-padding-left sm-no-padding">
+                            <label>* Zip Code:</label>
+                            <input required class="form-control" type="text" placeholder="10000" name="zipcode">
+                        </div>
+                        <div class="col-md-6 no-padding-right sm-no-padding">
+                            <label>* Phone Number:</label>
+                            <input required class="form-control" type="number" name="phone" maxlength="17" placeholder="088812345678" value="">
+                        </div>
+                        <div class="col-md-12 no-padding-right no-padding-left sm-no-padding">
+                            <label>* Country:</label>
+                            <input type="text" class="form-control" value="Indonesia" name="country" disabled="true">
+                        </div>
+                        <input id="form-button" class="highlight-button-black-background btn btn-block no-margin checkout-btn xs-width-100 xs-text-center" type="submit" value="Continue">
+                </div>
+            </div>
+        </form>
+        <div class="row hidden" id="success-alert">
+            <div class="col-md-7 col-sm-10 center-col">
+                <!-- alert message -->
+                <div class="alert alert-success fade in" role="alert">
+                    <i class="fa fa-thumbs-up alert-success"></i>
+                    <strong>Well done!</strong> You successfully add User Information and Shipping Address.
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                </div>
+                <!-- end alert message -->
+            </div>
+        </div>
+        <div class="row margin-five sm-margin-bottom-seven">
+            <div class="col-sm-12 shop-cart-table">
+                <table class="table shop-cart text-center">
+                    <thead>
+                        <tr>
+                            <th class="first"></th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Product</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Price</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Quantity</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for items in Items %}
+                        <tr>
+                            <td class="product-thumbnail text-left">
+                                <a href="#"><img width="120px" height="120px" src="{{items.productOrdered.imageURL}}" alt="{{items.productOrdered.nameProduct}}" ></a>
+                            </td>
+                            <td class="text-left">
+                                <a href="#">{{items.productOrdered.nameProduct}}</a>
+                            </td>
+                            <td class="text-left">
+                                Rp{{items.productOrdered.priceProduct|floatformat:2}}
+                            </td>
+                            <td class="product-quantity text-left">
+                                {{items.quantityOrdered}}
+                            </td>
+                            <td class="product-subtotal text-left">Rp{{items.getOrderTotal|floatformat:2}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div id="accordion-one" class="col-md-6 col-sm-12 panel-group accordion-style1 sm-margin-bottom-seven">
+                <div class="panel panel-default">
+                    <div class="panel-heading active-accordion" id="accordion-one-links3">
+                        <a href="#accordion-one-link3" data-parent="#accordion-one" data-toggle="collapse" class="">
+                            <h4 class="panel-title" id="payment-information-label">Payment Information<span class="pull-right"><i class="fa fa-minus"></i></span></h4>
+                            <h4 class="panel-title hidden" id="review-information-label">Review Information<span class="pull-right"><i class="fa fa-minus"></i></span></h4>
+                        </a>
+                    </div>
+                    <div class="panel-collapse collapse in" id="accordion-one-link3" style="">
+                        <div class="panel-body">
+                            <form id="payment-form">
+                                <div class="radio">
+                                    <label><input type="radio" checked="checked" id="banktransfer" name="banktransfer"><img src="https://docs.midtrans.com/asset/image/main/midtrans-logo.png" width="125px"></label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-body hidden" id="shipping-review">
+                            <div class="row margin-five sm-margin-bottom-seven">
+                                <div class="col-sm-12 shop-cart-table">
+                                    <table class="customtable shop-cart text-center">
+                                    <tbody>
+                                        <tr>
+                                            <td width="20%" class="text-left"><strong class="black-text">Name</strong></td>
+                                            <td width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-name"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dcdcdc;" width="20%" class="text-left"><strong class="black-text">Address</strong></td>
+                                            <td style="background-color: #dcdcdc;" width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-address"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%" class="text-left"><strong class="black-text">City</strong></td>
+                                            <td width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-city"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dcdcdc;" width="20%" class="text-left"><strong class="black-text">State</strong></td>
+                                            <td style="background-color: #dcdcdc;" width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-state"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%" class="text-left"><strong class="black-text">Zip Code</strong></td>
+                                            <td width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-zipcode"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dcdcdc;" width="20%" class="text-left"><strong class="black-text">Country</strong></td>
+                                            <td style="background-color: #dcdcdc;" width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-country"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%" class="text-left"><strong class="black-text">Phone Number</strong></td>
+                                            <td width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-phone"></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color: #dcdcdc;" width="20%" class="text-left"><strong class="black-text">Email</strong></td>
+                                            <td style="background-color: #dcdcdc;" width="80%" class="text-left"><strong class="black-text">: </strong><strong id="shipping-review-email"></strong></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <table class="table cart-total">
+                    <tbody>
+                        <tr>
+                            <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Total Items</th>
+                            <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text xs-no-padding">{{Order.getCartItems}}</td>
+                        </tr>
+                        <tr>
+                            <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Cart Subtotal</th>
+                            <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text xs-no-padding">Rp{{Order.getCartTotal|floatformat:2}}</td>
+                        </tr>
+                        <tr>
+                            <th class="padding-two text-right no-padding-right text-uppercase font-weight-600 letter-spacing-2 text-small xs-no-padding">Shipping and Handling</th>
+                            <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text text-small xs-no-padding">Free</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="padding-one no-padding-right xs-no-padding">
+                                <hr>
+                            </td>
+                        </tr>
+                        <tr class="total">
+                            <th id="order-totals" class="padding-two text-uppercase text-right no-padding-right font-weight-600 text-large xs-no-padding">Order Total</th>
+                            <td class="padding-two text-uppercase text-right no-padding-right font-weight-600 black-text text-large no-letter-spacing xs-no-padding">Rp{{Order.getCartTotal|floatformat:2}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="padding-one no-padding-right xs-no-padding">
+                                <hr class="no-margin-bottom">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="box-element hidden" id="payment-info">
+                    <button id="make-payment" class="highlight-button-black-background btn no-margin pull-right checkout-btn xs-width-100 xs-text-center">Order Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'snippets/checkoutlogic.html' %}
+{% endblock mainContent %}

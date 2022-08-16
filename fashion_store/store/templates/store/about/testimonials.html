@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title page-title-small border-top-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <h1 class="black-text">Testimonials</h1>
+            </div>
+            <div class="col-md-4 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>Testimonials</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section id="slider" class="wow fadeIn fix-background" style="background-image:url('{% static 'img/index/logo-text-1920x1100.jpg' %}');">
+    <div class="opacity-full bg-dark-gray"></div>
+    <div class="container">
+        <div class="row">
+            <div id="owl-demo" class="col-xs-12 owl-carousel owl-theme light-pagination bottom-pagination dark-pagination-without-next-prev-arrow position-relative">
+                {% for testimonials in OldTestimonials %}
+                <div class="item">
+                    <div class="col-md-5 col-sm-8 no-padding testimonial-style2 center-col text-center margin-three no-margin-top">
+                        <img src="{{testimonials.imageTesti}}" alt="{{testimonials.nameTestimonials}}"/>
+                        <p class="white-text text-med">{{testimonials.messageTestimonials|truncatechars:191}}</p>
+                        <span class="name white-text text-med">{{testimonials.nameTestimonials}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="wow fadeIn cover-background" style="background-color: black; background-image:url('');">
+    <div class="opacity-medium bg-dark-gray"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-sm-8 center-col text-center position-relative">
+                <p class="title-med text-uppercase letter-spacing-1 white-text font-weight-600 wow bounceIn">Over 100<br> Happy clients in Indonesia</p>
+                <p class="text-large margin-ten no-margin-bottom light-gray-text wow fadeInUp">Lebih dari 100 pelanggan sangat senang berbelanja di Kuffa.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}
+    

@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="parallax2 parallax-fix full-screen no-padding">
+    <img class="parallax-background-img" src="{% static 'img/index/logo-only-1920x1100.png' %}" alt="" />
+    <div class="opacity-medium bg-white"></div>
+    <div class="container full-screen position-relative" >
+        <div class="slider-typography">
+            <div class="slider-text-middle-main">
+                <div class="slider-text-middle text-center slider-text-middle1 center-col wow fadeIn">
+                    <span class="fashion-subtitle black-text text-uppercase font-weight-700 text-center ">Art of Fashion</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-down"><a href="#about" class="inner-link"><i class="fa fa-angle-down bg-black white-text"></i></a></div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section id="about" class="fix-background" style="background-image:url('{% static 'img/index/logo-text-1920x1100.jpg' %}');">
+    <div class="opacity-light bg-black"></div>
+    <div class="opacity-medium bg-dark-gray"></div>
+    <div class="container position-relative" >
+        <div class="slider-typography position-relative">
+            <div class="slider-text-middle-main">
+                <div class="slider-text-middle text-center slider-text-middle1 center-col wow fadeIn">
+                    <span class="fashion-subtitle white-text text-uppercase font-weight-700 border-color-white text-center ">We love Trend</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="title-small text-uppercase font-weight-600 black-text letter-spacing-2">Latest Products</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-8 margin-three center-col text-center">
+                <h4 class="gray-text">
+                    "Sesungguhnya Allah telah membeli dari orang-orang mukmin diri dan harta mereka dengan memberikan surga untuk mereka."<br>
+                    <b>(Q.S At-Taubah; 111.)</b><br><br>
+                    #Kuffa - #ExcellentSunnahOutfit - #MoslemClothes
+                </h4>
+            </div>
+        </div>
+        <div class="row margin-five no-margin-bottom">
+            {% for product in NewProducts %}
+            <div class="col-md-4 col-sm-4 xs-margin-bottom-ten">
+                <div class="blog-post">
+                    <div class="blog-post-images"><a href="/products/detail/{{product.id}}"><img src="{{product.imageURL}}" alt="{{product.nameProduct}}"></a></div>
+                    <div class="post-details">
+                        <center>
+                            <a href="/products/detail/{{product.id}}" class="post-title">{{product.nameProduct}}</a>
+                            <span class="price black-text title-small"><del>Rp{{product.discPrice|floatformat:2}}</del>Rp{{product.priceProduct|floatformat:2}}</span>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="btn btn-black btn-small margin-four no-margin-bottom" href="{% url 'store:store' %}">Go to Shopping</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}

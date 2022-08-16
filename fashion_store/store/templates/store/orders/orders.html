@@ -1,0 +1,85 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section class="content-top-margin page-title page-title-small bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-12 wow fadeInUp" data-wow-duration="300ms">
+                <!-- page title -->
+                <h1 class="black-text">Orders</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-12 breadcrumb text-uppercase wow fadeInUp xs-display-none" data-wow-duration="600ms">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a href="{% url 'store:index' %}">Home</a></li>
+                    <li>Orders</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<!-- content section -->
+<section class="content-section">
+    <div class="container">
+        {% if user.is_authenticated %}
+        <div class="row" id="check-order-items">
+            <div class="col-sm-12 shop-cart-table">
+                <table class="table shop-cart text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Transaction Order</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Customer</th>
+                            <th class="text-left text-uppercase font-weight-600 letter-spacing-2 text-small black-text">Date Order</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for items in CheckOrder %}
+                        <tr>
+                            <td class="text-left">
+                                <a href="/orders/detail/{{items.itemOrdered.transactionOrder}}">{{items.itemOrdered.transactionOrder}}</a>
+                            </td>
+                            <td class="text-left">
+                                {{items.nameShipping}} ({{items.emailShipping}})
+                            </td>
+                            <td class="text-left">
+                                {{items.itemOrdered.dateOrder|date:"M d, Y h:i A"}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row hidden" id="check-order-items-zero">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Empty Order in Your Account!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:store' %}">Continue Shopping</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="row" id="check-order-zero">
+            <div class="col-md-10 col-sm-8 col-xs-11 text-center center-col">
+                <p class="not-found-title black-text">Your not Logged In!</p>
+                <p class="text-med text-uppercase letter-spacing-2">The page you were looking<br> for could not be found.</p>
+                <a class="highlight-button-dark btn btn-small no-margin-right" href="{% url 'store:login' %}">Login to Your Account</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<script type="text/javascript">
+    var getTotalCheckOrder = '{{TotalCheckOrder}}'
+    if(getTotalCheckOrder == '0'){
+        document.getElementById('check-order-items').classList.add("hidden");
+        document.getElementById('check-order-items-zero').classList.remove("hidden");
+    }
+</script>
+{% endblock mainContent %}

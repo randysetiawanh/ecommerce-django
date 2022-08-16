@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<!-- head section -->
+<section class="page-title parallax3 parallax-fix page-title-large page-title-shop">
+    <div class="opacity-light bg-dark-gray"></div>
+    <img class="parallax-background-img" src="{% static 'img/store/bg-product1920x1000.jpg' %}" alt="" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 wow fadeIn">
+                <!-- page title tagline -->
+                <span class="text-uppercase white-text">Since 2021 brand</span>
+                <!-- end title tagline -->
+                <!-- page title -->
+                <h1 class="white-text">Collection</h1>
+                <!-- end page title -->
+            </div>
+            <div class="col-md-12 col-sm-12 breadcrumb text-uppercase margin-three no-margin-bottom wow fadeIn">
+                <!-- breadcrumb -->
+                <ul>
+                    <li><a class="white-text" href="{% url 'store:index' %}">Home</a></li>
+                    <li class="white-text"><a class="white-text" href="{% url 'store:store' %}">Shop</a></li>
+                    <li class="white-text">Collection</li>
+                </ul>
+                <!-- end breadcrumb -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end head section -->
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<!-- content section -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="shorting clearfix xs-margin-top-three">
+                    <div class="col-md-12 col-sm-12 grid-nav text-left">
+                        <p class="text-uppercase letter-spacing-1">Showing {{TotalProduct}} results in All Collection</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 grid-nav text-right">
+                        <p class="text-uppercase letter-spacing-1">Page {{Page.number}}</p>
+                    </div>
+                </div>
+                <div class="product-listing margin-three">
+                    <!-- shop item -->
+                    {% for product in Page %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="home-product text-center position-relative overflow-hidden margin-ten no-margin-top">
+                            <a href="/products/detail/{{product.id}}"><img src="{{product.imageURL}}" alt="{{product.nameProduct}}"/></a>
+                            <span class="product-name text-uppercase"><a href="/products/detail/{{product.id}}">{{product.nameProduct}}</a></span>
+                            <span class="price black-text"><del>{{product.discPrice|floatformat:2}}</del>Rp{{product.priceProduct|floatformat:2}}</span>
+                            <div class="quick-buy">
+                                <div class="product-share">
+                                    <button data-product="{{product.id}}" data-action="add" class="highlight-button-dark btn btn-small no-margin-right quick-buy-btn update-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- end shop item -->
+                </div>
+                <!-- pagination -->
+                <div class="pagination margin-two no-margin-bottom button-style wow fadeIn">
+                    {% if Page.has_previous %}
+                    <a href="{% url 'store:products' %}?page={{ Page.previous_page_number }}" class="btn-small-black-border-light btn btn-small button xs-margin-bottom-five">Previous Page</a>
+                    {% endif %}
+                    {% if Page.has_next %}
+                    <a href="{% url 'store:products' %}?page={{ Page.next_page_number }}" class="btn-small-black-border-light btn btn-small button xs-margin-bottom-five">Next Page</a>
+                    {% endif %}
+                </div>
+                <!-- end pagination -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end content section -->
+{% endblock mainContent %}

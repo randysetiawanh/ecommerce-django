@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block mainBanner %}
+<section id="slider" class="no-padding content-top-margin"> 
+    <!-- slider -->
+    <div id="owl-demo" class="owl-carousel owl-theme owl-half-slider dark-pagination dark-pagination-without-next-prev-arrow">
+        <!-- slider item -->
+        <div class="item owl-bg-img" style="background-image:url('{% static 'img/store/bg-store1920x710.jpg' %}');">
+            <div class="container position-relative">
+                <div class="slider-typography slider-typography-shop text-left">
+                    <div class="slider-text-middle-main">
+                        <div class="slider-text-middle padding-left-right-px">
+                            <span class="owl-subtitle white-text">Kuffa Styles</span>
+                            <span class="owl-title white-text xs-margin-bottom-seven">Indonesia Moslem Products</span>
+                            <a href="{% url 'store:products' %}" class="highlight-button-dark btn margin-four">Check Collection</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end slider item -->
+    </div>
+    <!-- end slider -->
+</section>
+{% endblock mainBanner %}
+
+{% block mainContent %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="section-title">New arrivals In Kuffa</h3>
+            </div>
+        </div>
+        <div class="row">
+            <!-- shop item -->
+            {% for product in Products %}
+            <div class="col-md-4 col-sm-4 xs-margin-bottom-ten">
+                <div class="blog-post">
+                    <div class="blog-post-images"><a href="/products/detail/{{product.id}}"><img src="{{product.imageURL}}" alt="{{product.nameProduct}}"></a></div>
+                    <div class="post-details">
+                        <center>
+                            <a href="/products/detail/{{product.id}}" class="post-title">{{product.nameProduct}}</a>
+                            <span class="price black-text title-small"><del>Rp{{product.discPrice|floatformat:2}}</del>Rp{{product.priceProduct|floatformat:2}}</span>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- end shop item -->
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="btn btn-black btn-small margin-four no-margin-bottom" href="{% url 'store:products' %}">View All Collection</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock mainContent %}

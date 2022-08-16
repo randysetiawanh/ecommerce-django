@@ -1,0 +1,142 @@
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ClientKey}}"></script>
+<script type="text/javascript">
+    var allowedShipping = '{{Order.getShipping}}'
+    var getTransactionOrder = '{{TransactionOrder}}'
+    var getTotal = '{{Order.getCartTotal}}'
+    var getTotalItems = '{{Order.getCartItems}}'
+    var getFName = '{{user.first_name}}'
+    var getLName = '{{user.last_name}}'
+    var getTransactionToken = '{{TransactionToken}}'
+
+    if(getTotalItems == '0'){
+        document.getElementById('checkout-info').classList.add("hidden");
+        document.getElementById('cart-zero').classList.remove("hidden");
+    }
+
+    if (user != 'AnonymousUser'){
+        document.getElementById('email').disabled = true;
+        if (getFName != null){
+            document.getElementById('firstname').disabled = true;
+        }
+        if (getLName != null){
+            document.getElementById('lastname').disabled = true;
+        }
+    }
+    
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        var shippingInfoPrint = {
+            'name': form.firstname.value + ' ' + form.lastname.value,
+            'email': form.email.value,
+            'addressShipping': form.address.value,
+            'cityShipping':form.city.value,
+            'stateShipping':form.state.value,
+            'zipcodeShipping':form.zipcode.value,
+            'countryShipping':form.country.value,
+            'phoneShipping':form.phone.value,
+            'emailShipping':form.email.value,
+        }
+        console.log('Form Submitted...')
+        console.log(shippingInfoPrint)
+        document.getElementById('form').classList.add("hidden");
+        document.getElementById('payment-info').classList.remove("hidden");
+        document.getElementById('success-alert').classList.remove("hidden");
+        document.getElementById('payment-information-label').classList.add("hidden");
+        document.getElementById('payment-form').classList.add("hidden");
+        document.getElementById('review-information-label').classList.remove("hidden");
+        document.getElementById('shipping-review').classList.remove("hidden");
+        document.getElementById('shipping-review-name').innerHTML = shippingInfoPrint.name;
+        document.getElementById('shipping-review-email').innerHTML = shippingInfoPrint.email;
+        document.getElementById('shipping-review-address').innerHTML = shippingInfoPrint.addressShipping;
+        document.getElementById('shipping-review-city').innerHTML = shippingInfoPrint.cityShipping;
+        document.getElementById('shipping-review-state').innerHTML = shippingInfoPrint.stateShipping;
+        document.getElementById('shipping-review-zipcode').innerHTML = shippingInfoPrint.zipcodeShipping;
+        document.getElementById('shipping-review-country').innerHTML = shippingInfoPrint.countryShipping;
+        document.getElementById('shipping-review-phone').innerHTML = shippingInfoPrint.phoneShipping;
+        document.getElementById('shipping-review-email').innerHTML = shippingInfoPrint.emailShipping;
+    })
+
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        submitPayment()
+    })
+
+    function submitPayment(){
+        snap.pay('{{TransactionToken}}', {
+        onSuccess: function(result){
+            alert('Payment Success!');
+            document.getElementById('js-preloader').classList.remove("hidden");
+            document.getElementById('make-payment').classList.add("hidden");
+            submitFormData()
+        },
+        onPending: function(result){
+            alert('Payment Pending!');
+            window.location.href = "{% url 'store:checkout' %}"
+        },
+        onError: function(result){
+            alert('Payment Failed!');
+            window.location.href = "{% url 'store:checkout' %}"
+        }
+        });
+    }
+
+    function submitFormData(){
+        console.log('Payment button clicked')
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'getTotal':getTotal,
+            'getTransactionOrder':getTransactionOrder,
+        }
+        var shippingInfo = {
+            'nameShipping':null,
+            'addressShipping':null,
+            'cityShipping':null,
+            'stateShipping':null,
+            'zipcodeShipping':null,
+            'countryShipping':null,
+            'phoneShipping':null,
+            'emailShipping':null,
+        }
+
+        if (allowedShipping != 'False'){
+            shippingInfo.nameShipping = form.firstname.value + ' ' + form.lastname.value
+            shippingInfo.addressShipping = form.address.value
+            shippingInfo.cityShipping = form.city.value
+            shippingInfo.stateShipping = form.state.value
+            shippingInfo.zipcodeShipping = form.zipcode.value
+            shippingInfo.countryShipping = form.country.value
+            shippingInfo.phoneShipping = form.phone.value
+            shippingInfo.emailShipping = form.email.value
+        }
+
+        if (user == 'AnonymousUser' || user != 'AnonymousUser'){
+            userFormData.name = form.firstname.value + ' ' + form.lastname.value
+            userFormData.email = form.email.value
+        }
+
+        console.log('Shipping Info:', shippingInfo)
+        console.log('User Info:', userFormData)
+
+        var url = "/process_order/"
+        fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-Type':'applicaiton/json',
+                'X-CSRFToken':csrftoken,
+            }, 
+            body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
+            
+        })
+        .then((response) => response.json())
+        .then((data) => {
+                console.log('Success:', data);
+                alert('Order created! Please check your order.');
+
+                cart = {}
+                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+                
+                window.location.href = "{% url 'store:success_order' %}"
+        })
+    }
+</script>

@@ -1,0 +1,10 @@
+<!-- start empty navbar cart logic -->
+<script type="text/javascript">
+    var getTotalItems = '{{Order.getCartItems}}'
+
+    if(getTotalItems == '0'){
+        document.getElementById('cart-content-navbar').classList.add("hidden");
+        document.getElementById('cart-content-navbar-zero').classList.remove("hidden");
+    }
+</script>
+<!-- end empty navbar cart logic -->
